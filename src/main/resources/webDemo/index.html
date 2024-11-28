@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download File with Progress</title>
+</head>
+<body>
+<h1>Download File</h1>
+<button id="startDownloadButton">Start Download</button>
+<div id="progressContainer">
+    <p>Download Progress: <span id="progressText">0%</span></p>
+    <progress id="progressBar" value="0" max="100"></progress>
+</div>
+<a id="downloadButton" href="#" download="test.txt">Download the File</a>
+
+<script>
+    const downloadButton = document.getElementById('downloadButton');
+    downloadButton.style.display = 'none';
+    document.getElementById('startDownloadButton').addEventListener('click', function() {
+        let clientId = 'client-' + Math.floor(Math.random() * 1000);  // Tạo một clientId ngẫu nhiên
+        // let filename = 'example_large_file.zip';  // Đặt tên file bạn muốn tải
+        let filename = 'test.txt';
+
+        // Tạo SSE connection để nhận tiến độ tải
+        let eventSource = new EventSource(`http://localhost:8080/api/download/${filename}?clientId=${clientId}`);
+
+        // Xử lý sự kiện gửi từ server
+        eventSource.addEventListener('progress', function(event) {
+            console.log(event.data)
+            let response = JSON.parse(event.data);
+            let progress = parseFloat(response.progress);
+            console.log(event)
+            document.getElementById('progressText').textContent = progress.toFixed(2) + '%';
+            document.getElementById('progressBar').value = progress;
+        });
+
+        eventSource.addEventListener('complete', function(event) {
+            let response = JSON.parse(event.data);
+            let progress = parseFloat(response.progress);
+            document.getElementById('progressText').textContent = progress.toFixed(2) + '%';
+            document.getElementById('progressBar').value = progress;
+            alert('Download complete!');
+            downloadButton.href = response.url
+            downloadButton.style.display = 'block';
+            eventSource.close();
+        });
+
+        eventSource.addEventListener('error', function(event) {
+            alert('Error: ' + event.data.message);
+            eventSource.close();
+        });
+    });
+
+    document.getElementById("downloadButton").addEventListener("click", function(event) {
+        // Prevent the default behavior (which would open the file in a new tab)
+        event.preventDefault();
+
+        // Get the href attribute (file URL)
+        const fileUrl = this.getAttribute('href');
+
+        // Trigger the download programmatically using the download attribute
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = this.getAttribute('download');  // Use the 'download' attribute for the filename
+
+        // Append the link to the document body (not visible)
+        document.body.appendChild(link);
+
+        // Programmatically trigger a click event on the link to start the download
+        link.click();
+
+        // Remove the link after the download starts (cleanup)
+        document.body.removeChild(link);
+    });
+</script>
+</body>
+</html>
