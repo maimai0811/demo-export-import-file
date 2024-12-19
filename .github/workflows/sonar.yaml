@@ -78,6 +78,12 @@ jobs:
 #        uses: actions/setup-java@v2
 #        with:
 #          java-version: '11'
+      - name: Set up Maven
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'zulu'
+          cache: 'maven'  # Cài Maven và cache lại để tăng hiệu suất
 
       # 5. Build dự án với Maven
       - name: Build with Maven
