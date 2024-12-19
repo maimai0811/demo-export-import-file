@@ -71,7 +71,7 @@ jobs:
 
       # 3. Clean SonarQube cache trước khi thực hiện phân tích
       - name: Clean SonarQube cache
-        run: rm -rf ~/.sonar
+        run: rm -rf ~/.sonar/cache
 
       # 4. Cài đặt và cấu hình Maven (nếu cần)
 #      - name: Set up Maven
@@ -93,4 +93,4 @@ jobs:
       - name: Run SonarQube Scanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Đặt SonarQube token làm biến môi trường
-        run: mvn sonar:sonar -Dsonar.projectKey=test-sonar -Dsonar.host.url=https://30e3-14-231-181-143.ngrok-free.app -Dsonar.login=$SONAR_TOKEN -X  # Chạy với chế độ debug để có thêm thông tin chi tiết
+        run: mvn sonar:sonar -Dsonar.projectKey=test-sonar -Dsonar.host.url=https://30e3-14-231-181-143.ngrok-free.app -Dsonar.login=$SONAR_TOKEN -Dsonar.verbose=true -X  # Chạy với chế độ debug để có thêm thông tin chi tiết

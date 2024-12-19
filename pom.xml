@@ -248,7 +248,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.8.0.2131</version>  <!-- Cập nhật phiên bản mới nhất -->
+                <version>4.0.0.4121</version>  <!-- Cập nhật phiên bản mới nhất -->
             </plugin>
 <!--            &lt;!&ndash; https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin &ndash;&gt;-->
 <!--            <dependency>-->
