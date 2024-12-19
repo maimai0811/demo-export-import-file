@@ -85,6 +85,10 @@ jobs:
           distribution: 'zulu'
           cache: 'maven'  # Cài Maven và cache lại để tăng hiệu suất
 
+      # Xóa bộ nhớ đệm Maven (repository cache) cho plugin sonar
+      - name: Clean Maven repository cache
+        run: rm -rf ~/.m2/repository/org/sonarsource/scanner/maven
+
       # 5. Build dự án với Maven
       - name: Build with Maven
         run: mvn clean install -DskipTests -U  # Cờ -U để cập nhật các phụ thuộc
