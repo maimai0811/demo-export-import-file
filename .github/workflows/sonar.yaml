@@ -97,4 +97,4 @@ jobs:
       - name: Run SonarQube Scanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Đặt SonarQube token làm biến môi trường
-        run: mvn sonar:sonar -Dsonar.projectKey=test-sonar -Dsonar.host.url=https://30e3-14-231-181-143.ngrok-free.app -Dsonar.login=$SONAR_TOKEN -Dsonar.verbose=true -X  # Chạy với chế độ debug để có thêm thông tin chi tiết
+        run: mvn sonar:sonar -Dsonar.projectKey=test-sonar -Dsonar.host.url=https://5ce9-14-177-239-244.ngrok-free.app -Dsonar.login=$SONAR_TOKEN -Dsonar.verbose=true -X  # Chạy với chế độ debug để có thêm thông tin chi tiết
